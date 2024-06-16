@@ -62,8 +62,8 @@ router.patch('completed/:id', async (req, res) => {
   }
 })
 
-//PATCH 'api/v1/todos/completed/:id
-router.patch('completed/:id', async (req, res) => {
+//PATCH 'api/v1/todos/not-completed/:id
+router.patch('not-completed/:id', async (req, res) => {
   const id = Number(req.params.id)
   try {
     await db.updatedAsNotCompleted(id)
