@@ -8,10 +8,7 @@ export function getTodos(): Promise<Todo[]> {
 }
 
 export function getTodoById(id: number): Promise<Todo> {
-  return db('todos')
-    .where({ id })
-    .select('id', 'task_details as taskDetails', 'priority', 'completed')
-    .first()
+  return db('todos').where({ id }).select().first()
 }
 
 export function addTodo(newTodo: Todo): Promise<void> {

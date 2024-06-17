@@ -73,3 +73,5 @@ router.patch('not-completed/:id', async (req, res) => {
     res.sendStatus(500)
   }
 })
+
+export default router

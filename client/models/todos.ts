@@ -1,5 +1,5 @@
 export interface TodoData {
-  taskDetails: string
+  task_details: string
   priority: string
   completed: boolean
 }
