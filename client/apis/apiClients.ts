@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { Todo, TodoData } from '../models/todos'
+import { Todo } from '../models/todos'
 
 const rootUrl = '/api/v1/todos'
 
@@ -13,6 +13,20 @@ export async function getTodoById(id: number): Promise<Todo> {
   return res.body
 }
 
-export async function addTodo(newTodo: TodoData): Promise<void> {
+export async function addTodo(newTodo: Todo): Promise<void> {
   await request.post(rootUrl).send(newTodo)
+}
+
+export async function completeTodo(id: number): Promise<void> {
+  const res = await request.patch(`${rootUrl}/completed/${id}`)
+  return res.body
+}
+
+export async function incompleteTodo(id: number): Promise<void> {
+  const res = await request.patch(`${rootUrl}/not-completed/${id}`)
+  return res.body
+}
+
+export async function delTodo(id: number): Promise<void> {
+  await request.delete(`${rootUrl}/${id}`)
 }

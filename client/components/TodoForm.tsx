@@ -1,48 +1,40 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import React, { useState } from 'react'
-import { addTodo } from '../apis/apiClients'
-import { TodoData } from '../models/todos'
+import useAddTodo from '../apis/hooks/useAddTodo'
+import { Todo } from '../models/todos'
 
 export default function TodoForm() {
   const [newTodo, setNewTodo] = useState('')
-  const [newPriority, setPriority] = useState('')
-
-  const queryClient = useQueryClient()
-  const addMutation = useMutation({
-    mutationFn: (todo: TodoData) => addTodo(todo),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
-  })
+  const addTodo = useAddTodo()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewTodo(e.target.value)
   }
 
-  const handlePriority = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPriority(e.target.value)
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
 
-    addMutation.mutate({
+    if (newTodo.length < 1) return
+
+    const todo: Todo = {
+      id: NaN,
       task_details: newTodo,
-      priority: newPriority,
+      priority: 'high',
       completed: false,
-    })
+    }
+    await addTodo.mutateAsync(todo)
   }
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="Todo">Todo</label>
-        <input onChange={handleChange} value={newTodo} id="todo"></input>
-        <label htmlFor="Priority">Priority</label>
         <input
-          onChange={handlePriority}
-          value={newPriority}
-          id="priority"
-        ></input>
-        <button>Submit</button>
+          className="new-todo"
+          autoFocus={true}
+          type="text"
+          placeholder="add a new agenda item"
+          value={newTodo}
+          onChange={handleChange}
+        />
       </form>
     </>
   )
