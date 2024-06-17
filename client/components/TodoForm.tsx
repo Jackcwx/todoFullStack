@@ -28,8 +28,9 @@ export default function TodoForm() {
     <>
       <form onSubmit={handleSubmit}>
         <input
+          aria-labelledby="newTodo"
           className="new-todo"
-          autoFocus={true}
+          autoFocus
           type="text"
           placeholder="add a new agenda item"
           value={newTodo}

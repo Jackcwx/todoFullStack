@@ -5,7 +5,7 @@ export default function useCompleteTodo() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (id: number) => {
-      completeTodo(id)
+      await completeTodo(id)
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })

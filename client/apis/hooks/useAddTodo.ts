@@ -6,7 +6,7 @@ export default function useAddTodo() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (todo: Todo) => {
-      addTodo(todo)
+      await addTodo(todo)
     },
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
